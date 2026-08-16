@@ -1,132 +1,186 @@
 # BOS AI Copilot
 
-O BOS AI Copilot é uma aplicação de Inteligência Artificial desenvolvida em .NET com Semantic Kernel para apoiar a criação, análise e evolução de projetos baseados no BOS Framework.
+[![.NET](https://img.shields.io/badge/.NET-9-512BD4)](https://dotnet.microsoft.com/)
+[![C#](https://img.shields.io/badge/C%23-13-239120)](https://learn.microsoft.com/dotnet/csharp/)
+[![Semantic Kernel](https://img.shields.io/badge/Semantic%20Kernel-AI-blue)](https://github.com/microsoft/semantic-kernel)
+[![Status](https://img.shields.io/badge/status-active%20development-orange)](#project-status)
 
-O sistema permitirá que o usuário converse com um assistente de IA, descreva ideias de projetos, identifique informações ausentes, solicite estruturas iniciais de artefatos e execute operações por meio de funções nativas em C#.
+**BOS AI Copilot** is a .NET AI Engineering project that explores how LLMs, Semantic Kernel, native C# tools and structured outputs can support the creation, analysis and evolution of software projects based on the BOS Framework.
 
-## Objetivo
+The repository is intentionally public while the project evolves, so it also serves as a practical record of the engineering decisions involved in building an LLM-powered application with .NET.
 
-O objetivo da versão 1.0 é validar, na prática, os principais fundamentos necessários para a transição de desenvolvedor .NET para AI Engineer.
+> **Current stage:** active development. The architecture and capabilities are evolving incrementally; this README distinguishes implemented foundations from planned capabilities.
 
-O projeto será utilizado como:
+## Why this project exists
 
-- laboratório de aprendizado;
-- projeto de portfólio;
-- aplicação real do ecossistema BOS;
-- base evolutiva para o estudo de RAG, MCP e agentes.
+Project ideas usually begin with incomplete, ambiguous or unstructured information. The goal of BOS AI Copilot is to help transform that initial input into something an engineer can reason about and review.
 
-## Problema
+The assistant is designed to:
 
-Durante a iniciação de projetos, as informações fornecidas pelos usuários podem ser incompletas, ambíguas ou não estruturadas.
+1. understand the user's project intent;
+2. identify missing information;
+3. select appropriate deterministic tools when needed;
+4. produce structured results;
+5. keep the human in the review and decision loop.
 
-O BOS AI Copilot deverá interpretar essas informações, identificar lacunas, selecionar ferramentas apropriadas e transformar a solicitação em estruturas organizadas para revisão humana.
+## Example use case
 
-## Exemplo de uso
+> **User:** I want to start a project to automate restaurant customer service through WhatsApp.
 
-Usuário:
+The copilot can progressively analyze the request, identify information gaps, invoke appropriate functions and generate structured project information for human review.
 
-> Quero iniciar um projeto para automatizar o atendimento de um restaurante pelo WhatsApp.
+## Project status
 
-O sistema deverá:
+### Implemented foundations
 
-1. interpretar a solicitação;
-2. identificar que se trata de uma nova ideia;
-3. detectar informações ausentes;
-4. selecionar uma função apropriada;
-5. gerar uma saída estruturada;
-6. apresentar uma resposta compreensível ao usuário.
+- .NET solution separated into API, Core and Plugins projects
+- LLM integration
+- Semantic Kernel integration
+- Native C# plugins / tools
+- Function calling foundations
+- Conversation-oriented interaction
+- External prompt structure
+- Dependency Injection
+- Configuration and application structure prepared for incremental evolution
 
-## Escopo da versão 1.0
+### In progress / evolving
 
-A primeira versão incluirá:
+- richer project-analysis workflows
+- additional BOS-oriented plugins
+- structured project artifacts
+- stronger automated test coverage
+- retrieval capabilities and knowledge grounding
 
-- conversação com um Large Language Model;
-- histórico da conversa durante a sessão;
-- system prompt externo;
-- streaming de respostas;
-- Semantic Kernel;
-- plugins nativos em C#;
-- function calling;
-- seleção automática de funções;
-- respostas estruturadas;
-- serialização e desserialização em JSON;
-- injeção de dependência;
-- tratamento de erros;
-- logging;
-- configuração externa;
-- gerenciamento seguro da API key;
-- testes unitários e de integração.
+### Future evolution
 
-## Plugins previstos
+- Retrieval-Augmented Generation (RAG)
+- embeddings and vector retrieval
+- MCP integration
+- more advanced agentic workflows
+- persistent memory where justified
+- deeper BOS document integration
+- production-oriented evaluation and observability
 
-### ProjectPlugin
-
-Responsável por operações relacionadas à análise e estruturação de projetos.
-
-Funções previstas:
-
-- `CreateProjectDraft`
-- `IdentifyMissingInformation`
-- `DefineProjectObjectives`
-- `DefineSuccessCriteria`
-- `ClassifyProjectStage`
-
-### CostEstimationPlugin
-
-Responsável por cálculos determinísticos.
-
-Funções previstas:
-
-- `EstimateTokenCost`
-- `EstimateMonthlyOperatingCost`
-- `CalculateCostPerInteraction`
-
-### DateTimePlugin
-
-Responsável por operações relacionadas a datas.
-
-Funções previstas:
-
-- `GetCurrentDate`
-- `CalculateDeadline`
-- `CalculateDaysBetweenDates`
-
-### ArtifactPlugin
-
-Responsável pela criação inicial de estruturas de artefatos.
-
-Funções previstas:
-
-- `CreateProjectCharterDraft`
-- `CreateRequirementDraft`
-- `CreateAcceptanceCriteria`
-
-## Fora do escopo da versão 1.0
-
-A primeira versão não incluirá:
-
-- RAG;
-- embeddings;
-- banco vetorial;
-- leitura integral dos documentos do BOS;
-- MCP;
-- agentes autônomos;
-- multiagentes;
-- memória persistente;
-- integração com WhatsApp;
-- autenticação;
-- publicação automática no GitHub;
-- geração automática de documentos oficiais.
-
-Essas capacidades serão adicionadas progressivamente em versões futuras.
-
-## Arquitetura inicial
-
-A estrutura inicial prevista é:
+## Architecture
 
 ```text
-BOS-AI-Copilot
-├── docs
-├── prompts
-├── src
-└── tests
+BOS-AI-Copilot/
+├── docs/                      # Technical and project documentation
+├── prompts/                   # Externalized AI prompts
+├── src/
+│   ├── BosAiCopilot.Api/      # API / application entry point
+│   ├── BosAiCopilot.Core/     # Core contracts and application logic
+│   └── BosAiCopilot.Plugins/  # Native C# tools exposed to the AI layer
+└── tests/                     # Automated tests
+```
+
+The project intentionally separates the AI orchestration layer from deterministic application capabilities. Business operations that can be expressed reliably in C# should remain deterministic tools rather than being delegated unnecessarily to the model.
+
+## Engineering principles
+
+This project is not intended to be only a prompt demo. The implementation is guided by software-engineering concerns that become especially important in AI applications:
+
+- explicit separation of responsibilities
+- deterministic tools for deterministic operations
+- structured outputs instead of free-form text where appropriate
+- dependency injection and testability
+- externalized prompts and configuration
+- secure secret management
+- incremental architecture
+- human review for generated project artifacts
+
+## Tech stack
+
+- **.NET / C#**
+- **ASP.NET Core**
+- **Microsoft Semantic Kernel**
+- **LLM integration**
+- **Native C# plugins / function calling**
+- **JSON structured outputs**
+- **xUnit** for automated testing
+
+## Planned plugin areas
+
+The project evolves through focused capabilities rather than a single monolithic agent.
+
+### Project analysis
+
+Examples of intended operations:
+
+- create a project draft
+- identify missing information
+- define objectives
+- define success criteria
+- classify project stage
+
+### Deterministic calculations
+
+Examples:
+
+- token-cost estimation
+- monthly operating-cost estimation
+- cost per interaction
+- date and deadline calculations
+
+### Artifact assistance
+
+Examples:
+
+- initial project-charter structure
+- requirement drafts
+- acceptance-criteria drafts
+
+## Running locally
+
+Clone the repository:
+
+```bash
+git clone https://github.com/wilfigueredo/BOS-AI-Copilot.git
+cd BOS-AI-Copilot
+```
+
+Restore and build:
+
+```bash
+dotnet restore
+dotnet build
+```
+
+Run the automated tests:
+
+```bash
+dotnet test
+```
+
+The application requires the appropriate LLM provider configuration and API credentials. Secrets should be provided through local secret management or environment configuration and must not be committed to the repository.
+
+## Roadmap
+
+The roadmap is intentionally incremental:
+
+```text
+LLM integration
+      ↓
+Semantic Kernel
+      ↓
+Native tools / function calling
+      ↓
+Structured workflows
+      ↓
+Retrieval / RAG
+      ↓
+Evaluation & observability
+      ↓
+More advanced agentic capabilities
+```
+
+The objective is to introduce complexity only when the previous layer is understood and testable.
+
+## Portfolio context
+
+BOS AI Copilot is part of my transition from **Software Engineering → AI Engineering**. It applies a long-standing .NET and software-architecture background to modern LLM application development, with emphasis on maintainability, deterministic behavior, testing and production-oriented engineering practices.
+
+---
+
+**William Figueiredo**  
+Software Engineering → AI Engineering
